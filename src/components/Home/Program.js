@@ -1,36 +1,37 @@
 import { Box, Container, Grid2, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const Program = () => {
     const location = useLocation();
     const { program } = location.state || {};
-    console.log(program);
+    const [programData, setProgramData] = useState([])
+
+    useEffect(()=> {
+        fetch(`http://localhost:3300/workoutprograms/${program.p_id}`)
+          .then(res=>res.json())
+          .then(data => setProgramData(data))
+          .catch(err=> console.log(err));
+      },[])
+
+    useEffect(()=> {
+        console.log(programData)
+    },[programData])
 
     return (
         <Container sx={{ marginTop: "100px" }}>
-            {program.weeks?.map((week, index) => (
-                <Box key={index} sx={{ mb: "40px" }}>
-                    <Typography sx={{ fontSize: "22px", fontWeight: "bold", mb: "20px" }}>
-                        Week {week.week}
-                    </Typography>
+            {programData.weeks?.map((week)=> (
+                <Box sx={{borderStyle:"solid", padding:"20px", borderColor:"white", borderWidth:"2px"}}>
+                    <Typography sx={{fontSize:"24px", fontWeight:"bold", mb:"20px"}}>Week {week.week_number}</Typography>
                     <Grid2 container>
-                        {week.workout.map((day) => (
-                            <Grid2 size={1.7} container>
-                                <Box key={day.day} sx={{ mb: "30px"}}>
-                                    <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>{day.day}</Typography>
-                                    <Grid2 container sx={{ gap: "50px", mb: "20px" }}>
-                                        {day.exercises.map((exercise) => (
-                                            <Grid2 item key={exercise.name}>
-                                                <Typography>{exercise.name}</Typography>
-                                                {exercise.sets ? (
-                                                    <Typography>{exercise.sets}x{exercise.reps}</Typography>
-                                                ) : (
-                                                    <Typography>{exercise.duration}</Typography>
-                                                )}
-                                            </Grid2>
-                                        ))}
-                                    </Grid2>
-                                </Box>
+                        {week.days?.map((day)=> (
+                            <Grid2 size={1.7} container sx={{flexDirection:'column', mb:"40px"}}>
+                                <Typography sx={{fontSize:"20px"}}>{day.day}</Typography>
+                                <Grid2 container sx={{flexDirection:"column"}}>
+                                    {day.exercises?.map((exercise)=> (
+                                        <Typography>{exercise.exercise}: {exercise.num_sets}x{exercise.reps}</Typography>
+                                    ))}
+                                </Grid2>
                             </Grid2>
                         ))}
                     </Grid2>

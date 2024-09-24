@@ -1,3 +1,12 @@
 body {
     background-color: #272928;
+    font-family:"Oswald"
+}
+
+label {
+    color:white;
+}
+
+input {
+    height:30px;
 }

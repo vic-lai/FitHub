@@ -5,13 +5,12 @@ import Program from './components/Home/Program';
 import { createTheme, ThemeProvider, } from '@mui/material';
 import './App.css'
 import { useEffect, useState } from 'react';
+import CreateProgram from './components/Home/CreateProgram';
 
 const theme = createTheme({
   typography: {
     fontFamily: "Oswald",
-    allVariants: {
-      color:"white"
-    },
+    
     h1: {
       color:"black"
     },
@@ -27,6 +26,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/program/:title" element={<Program />} />
+            <Route path="/create-program" element={<CreateProgram />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

@@ -8,7 +8,7 @@ const Navbar = () => {
         navigate("/")
     }
     return (
-        <Box sx={{position:"fixed", top:0, left:0,width:"100%", backgroundColor:"#379451"}}>
+        <Box sx={{position:"absolute", top:0, left:0,width:"100%", backgroundColor:"#379451"}}>
             <Grid2 container size={12} sx={{ height:"80px", alignItems:"center"}}>
                 <Grid2 size={6} container justifyContent="center">
                     <Typography sx={{fontSize:"30px", color:"white", borderStyle:"solid", paddingLeft:"40px", paddingRight:"40px", borderRadius:"40px",cursor: "pointer"}} onClick={handleClick}>FitHub</Typography>
@@ -16,7 +16,12 @@ const Navbar = () => {
                 <Grid2 container justifyContent="space-around" size={4}>
                     <Grid2>
                         <Link to="/">
-                            <Typography>Home</Typography>
+                            <Typography>Programs</Typography>
+                        </Link>
+                    </Grid2>
+                    <Grid2>
+                        <Link to="/create-program">
+                            <Typography>Create</Typography>
                         </Link>
                     </Grid2>
                     <Grid2>
@@ -26,7 +31,7 @@ const Navbar = () => {
                     </Grid2>
                     <Grid2>
                         <Link to="/contact">
-                            <Typography>contact</Typography>
+                            <Typography>Contact</Typography>
                         </Link>
                     </Grid2>
                 <Grid2>
