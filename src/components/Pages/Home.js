@@ -16,10 +16,9 @@ const Home = () => {
 
     useEffect(()=> {
         axios.get('http://localhost:3300/workoutprograms')
-          .then(res=>res.json())
-          .then((data) => {
-            setWorkoutPrograms(data);
-            console.log(data);
+          .then((res) => {
+            setWorkoutPrograms(res.data);
+            console.log(res.data);
             })
           .catch(err=> console.log(err));
       },[])

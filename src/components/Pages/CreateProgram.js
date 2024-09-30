@@ -16,6 +16,7 @@ const CreateProgram = () => {
     });
 
     const [weeksComponents, setWeeksComponents] = useState([]);
+    const [disabled, setDisabled] = useState(true);
 
     const createLayout = data => {
         const newWeeksComponent = [];
@@ -25,6 +26,7 @@ const CreateProgram = () => {
         }
         setWeeksComponents(newWeeksComponent);
         console.log(weeksComponents)
+        setDisabled(false)
     };
 
     const onSubmit = data => {
@@ -43,39 +45,39 @@ const CreateProgram = () => {
                         <Grid2 size={12}>
                             <label>
                                 Title <br />
-                                <input {...register("title")} style={{ width: "90%", minWidth: "160px" }} />
+                                <TextField {...register("title")} sx={{ width: "100%", minWidth: "160px", backgroundColor:"white", mb:"20px"}} />
                             </label>
                         </Grid2>
                         <Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
                             <label>
                                 Your Name<br />
-                                <input {...register("name")} />
+                                <TextField {...register("name")} sx={{backgroundColor:"white"}} />
                             </label>
                         </Grid2>
                         <Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
                             <label>
                                 What type of program is this?<br />
-                                <input {...register("p_type")} />
+                                <TextField {...register("p_type")} sx={{backgroundColor:"white"}} />
                             </label>
                         </Grid2>
                         <Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
                             <label>
                                 Number of weeks <br />
-                                <input {...register("num_weeks")} />
+                                <TextField {...register("num_weeks")} sx={{backgroundColor:"white"}} />
                             </label>
                         </Grid2>
                         <Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
                             <label>
                                 Days a week <br />
-                                <input {...register("days")} />
+                                <TextField {...register("days")} sx={{backgroundColor:"white"}} />
                             </label>
                         </Grid2>
                     </Grid2>
-                    <Button type="submit">Next</Button>
+                    <Button type="submit" variant="contained" sx={{marginTop:"20px"}} disabled={!disabled}>Next</Button>
                 </form>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     {weeksComponents}
-                    <Button type="submit" variant="contained">Create Program</Button>
+                    <Button type="submit" variant="contained" disabled={disabled} sx={{marginTop:"20px", mb:"20px"}}>Create Program</Button>
                 </form>
             </FormProvider>
         </Container>

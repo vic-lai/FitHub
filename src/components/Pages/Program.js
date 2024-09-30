@@ -45,14 +45,14 @@ const Program = () => {
         <Container sx={{ marginTop: "100px" }}>
             {programData?.map((week)=> (
                 <Box sx={{borderStyle:"solid", padding:"20px", borderColor:"white", borderWidth:"2px"}}>
-                    <Typography sx={{fontSize:"24px", fontWeight:"bold", mb:"20px"}}>Week {week.week_number}</Typography>
+                    <Typography sx={{fontSize:"24px", fontWeight:"bold", mb:"20px", color:"white"}}>Week {week.week_number}</Typography>
                     <Grid2 container>
                         {week.days?.map((day)=> (
                             <Grid2 size={1.7} container sx={{flexDirection:'column', mb:"40px"}}>
-                                <Typography sx={{fontSize:"20px"}}>Day {day.day_number}</Typography>
+                                <Typography sx={{fontSize:"20px", color:"white"}}>Day {day.day_number}</Typography>
                                 <Grid2 container sx={{flexDirection:"column"}}>
                                     {day.exercises?.map((exercise)=> (
-                                        <Typography>{exercise.exercise}: {exercise.num_sets}x{exercise.reps}</Typography>
+                                        <Typography sx={{color:"white"}}>{exercise.exercise}: {exercise.num_sets}x{exercise.reps}</Typography>
                                     ))}
                                 </Grid2>
                             </Grid2>
@@ -60,7 +60,7 @@ const Program = () => {
                     </Grid2>
                 </Box>
             ))}
-            <Typography sx={{ fontSize: "18px", mt: "30px" }}>Author: {program.author}</Typography>
+            <Typography sx={{ fontSize: "18px", mt: "30px",color:"white"}}>Author: {program.author}</Typography>
         </Container>
     );
 };
