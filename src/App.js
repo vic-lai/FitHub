@@ -1,11 +1,11 @@
 import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
-import Home from './components/Home/Home';
+import Home from './components/Pages/Home';
 import Navbar from './components/Assets/Navbar';
-import Program from './components/Home/Program';
+import Program from './components/Pages/Program';
 import { createTheme, ThemeProvider, } from '@mui/material';
 import './App.css'
 import { useEffect, useState } from 'react';
-import CreateProgram from './components/Home/CreateProgram';
+import CreateProgram from './components/Pages/CreateProgram';
 
 const theme = createTheme({
   typography: {

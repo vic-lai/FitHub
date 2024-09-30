@@ -1,4 +1,5 @@
 import { Box, Container, Grid2, Typography } from "@mui/material";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -8,25 +9,47 @@ const Program = () => {
     const [programData, setProgramData] = useState([])
 
     useEffect(()=> {
-        fetch(`http://localhost:3300/workoutprograms/${program.p_id}`)
-          .then(res=>res.json())
-          .then(data => setProgramData(data))
-          .catch(err=> console.log(err));
-      },[])
+        axios.get(`http://localhost:3300/workoutprograms/${program.p_id}`)
+          .then((res) => {
+            const groupedData = Object.values(res.data.reduce((acc, detail) => {
+                const { week_number, day_number, exercise, num_sets, reps } = detail;
+                if (!acc[week_number]) {
+                    acc[week_number] = {
+                        week_number,
+                        days: []
+                    };
+                }
+                const dayExists = acc[week_number].days.find(day => day.day_number === day_number);
+                if (!dayExists) {
+                    acc[week_number].days.push({
+                        day_number,
+                        exercises: []
+                    });
+                }
+                acc[week_number].days.find(day => day.day_number === day_number).exercises.push({
+                    exercise,
+                    num_sets,
+                    reps
+                });
+                return acc;
+            }, {}));
 
-    useEffect(()=> {
-        console.log(programData)
-    },[programData])
+            setProgramData(groupedData);
+            console.log('Grouped Data:', groupedData);
+        })
+        .catch(err => console.log(err));
+}, []);
+    
 
     return (
         <Container sx={{ marginTop: "100px" }}>
-            {programData.weeks?.map((week)=> (
+            {programData?.map((week)=> (
                 <Box sx={{borderStyle:"solid", padding:"20px", borderColor:"white", borderWidth:"2px"}}>
                     <Typography sx={{fontSize:"24px", fontWeight:"bold", mb:"20px"}}>Week {week.week_number}</Typography>
                     <Grid2 container>
                         {week.days?.map((day)=> (
                             <Grid2 size={1.7} container sx={{flexDirection:'column', mb:"40px"}}>
-                                <Typography sx={{fontSize:"20px"}}>{day.day}</Typography>
+                                <Typography sx={{fontSize:"20px"}}>Day {day.day_number}</Typography>
                                 <Grid2 container sx={{flexDirection:"column"}}>
                                     {day.exercises?.map((exercise)=> (
                                         <Typography>{exercise.exercise}: {exercise.num_sets}x{exercise.reps}</Typography>
@@ -37,7 +60,6 @@ const Program = () => {
                     </Grid2>
                 </Box>
             ))}
-
             <Typography sx={{ fontSize: "18px", mt: "30px" }}>Author: {program.author}</Typography>
         </Container>
     );

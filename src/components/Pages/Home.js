@@ -2,6 +2,7 @@ import { Accordion, AccordionSummary, AccordionDetails, Box, Container, Grid2, T
 import { useNavigate } from "react-router-dom";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Home = () => {
     const navigate = useNavigate();
@@ -14,9 +15,12 @@ const Home = () => {
     const [workoutPrograms, setWorkoutPrograms] = useState([]);
 
     useEffect(()=> {
-        fetch('http://localhost:3300/workoutprograms')
+        axios.get('http://localhost:3300/workoutprograms')
           .then(res=>res.json())
-          .then(data => setWorkoutPrograms(data))
+          .then((data) => {
+            setWorkoutPrograms(data);
+            console.log(data);
+            })
           .catch(err=> console.log(err));
       },[])
 
@@ -29,7 +33,8 @@ const Home = () => {
                     </AccordionSummary>
                     <AccordionDetails>
                         <Typography sx={{color:"black"}}>Type: {program.p_type} </Typography>
-                        <Typography sx={{color:"black"}}>Days a week: {program.days}</Typography>
+                        <Typography sx={{color:"black"}}>Number of weeks: {program.num_weeks} </Typography>
+                        <Typography sx={{color:"black"}}>Days a week: {program.days_per_week}</Typography>
                         <Typography sx={{color:"black"}}> Author: {program.author}</Typography>
                     </AccordionDetails>
                 </Accordion>

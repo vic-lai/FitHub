@@ -8,7 +8,7 @@ const Navbar = () => {
         navigate("/")
     }
     return (
-        <Box sx={{position:"absolute", top:0, left:0,width:"100%", backgroundColor:"#379451"}}>
+        <Box sx={{position:"absolute", top:0, left:0,width:"100%", backgroundColor:"#34abeb"}}>
             <Grid2 container size={12} sx={{ height:"80px", alignItems:"center"}}>
                 <Grid2 size={6} container justifyContent="center">
                     <Typography sx={{fontSize:"30px", color:"white", borderStyle:"solid", paddingLeft:"40px", paddingRight:"40px", borderRadius:"40px",cursor: "pointer"}} onClick={handleClick}>FitHub</Typography>
