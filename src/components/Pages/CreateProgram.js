@@ -38,46 +38,50 @@ const CreateProgram = () => {
     };
 
     return (
-        <Container sx={{ marginTop: "100px", backgroundColor: "gray" }}>
+        <Container sx={{ marginTop: "100px", backgroundColor: "gray", borderRadius:'20px' }}>
             <FormProvider {...{ register, handleSubmit, control }}>
                 <form onSubmit={handleSubmit(createLayout)}>
                     <Grid2 container size={12}>
-                        <Grid2 size={12}>
+                        <Grid2 size={11} sx={{marginLeft:"auto", marginRight:"auto", marginTop:"20px"}}>
                             <label>
                                 Title <br />
-                                <TextField {...register("title")} sx={{ width: "100%", minWidth: "160px", backgroundColor:"white", mb:"20px"}} />
+                                <TextField required disabled={!disabled} autoComplete="off" {...register("title")} sx={{'& .MuiOutlinedInput-notchedOutline': {borderRadius: '10px',}, borderRadius:"10px",width:"100%", minWidth: "160px", backgroundColor:!disabled?"darkgray":"white", mb:"20px"}}/>
                             </label>
                         </Grid2>
-                        <Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
+                        <Grid2 size={{ xs: 12, sm: 6, md: 3 }} container justifyContent="center">
                             <label>
                                 Your Name<br />
-                                <TextField {...register("name")} sx={{backgroundColor:"white"}} />
+                                <TextField required disabled={!disabled} autoComplete="off" {...register("name")} sx={{'& .MuiOutlinedInput-notchedOutline': {borderRadius: '10px',}, borderRadius:"10px",backgroundColor: !disabled?"darkgray":"white"}} />
                             </label>
                         </Grid2>
-                        <Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
+                        <Grid2 size={{ xs: 12, sm: 6, md: 3 }} container justifyContent="center">
                             <label>
                                 What type of program is this?<br />
-                                <TextField {...register("p_type")} sx={{backgroundColor:"white"}} />
+                                <TextField required disabled={!disabled} autoComplete="off" {...register("p_type")} sx={{'& .MuiOutlinedInput-notchedOutline': {borderRadius: '10px',}, borderRadius:"10px",backgroundColor: !disabled?"darkgray":"white"}} />
                             </label>
                         </Grid2>
-                        <Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
+                        <Grid2 size={{ xs: 12, sm: 6, md: 3 }} container justifyContent="center">
                             <label>
                                 Number of weeks <br />
-                                <TextField {...register("num_weeks")} sx={{backgroundColor:"white"}} />
+                                <TextField required disabled={!disabled} autoComplete="off" type="number" {...register("num_weeks")} sx={{'& .MuiOutlinedInput-notchedOutline': {borderRadius: '10px',}, borderRadius:"10px",backgroundColor: !disabled?"darkgray":"white"}} />
                             </label>
                         </Grid2>
-                        <Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
+                        <Grid2 size={{ xs: 12, sm: 6, md: 3 }} container justifyContent="center">
                             <label>
                                 Days a week <br />
-                                <TextField {...register("days")} sx={{backgroundColor:"white"}} />
+                                <TextField required disabled={!disabled} autoComplete="off" type="number" {...register("days")} sx={{'& .MuiOutlinedInput-notchedOutline': {borderRadius: '10px',}, borderRadius:"10px",backgroundColor: !disabled?"darkgray":"white"}} />
                             </label>
                         </Grid2>
                     </Grid2>
-                    <Button type="submit" variant="contained" sx={{marginTop:"20px"}} disabled={!disabled}>Next</Button>
+                    <Grid2 container justifyContent="center">
+                        <Button type="submit" variant="contained" sx={{marginTop:"20px", mb:"20px",backgroundColor:"#34abeb"}} disabled={!disabled}>Next</Button>
+                    </Grid2>
                 </form>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     {weeksComponents}
-                    <Button type="submit" variant="contained" disabled={disabled} sx={{marginTop:"20px", mb:"20px"}}>Create Program</Button>
+                    <Grid2 container justifyContent="center">
+                        <Button type="submit" variant="contained" disabled={disabled} sx={{marginTop:"20px", mb:"20px",backgroundColor:"#34abeb"}}>Create Program</Button>
+                    </Grid2>
                 </form>
             </FormProvider>
         </Container>

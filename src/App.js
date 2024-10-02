@@ -6,6 +6,7 @@ import { createTheme, ThemeProvider, } from '@mui/material';
 import './App.css'
 import { useEffect, useState } from 'react';
 import CreateProgram from './components/Pages/CreateProgram';
+import Contact from './components/Pages/Contact';
 
 const theme = createTheme({
   typography: {
@@ -27,6 +28,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/program/:title" element={<Program />} />
             <Route path="/create-program" element={<CreateProgram />} />
+            <Route path="/contact" element={<Contact />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

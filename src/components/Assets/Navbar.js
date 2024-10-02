@@ -25,11 +25,6 @@ const Navbar = () => {
                         </Link>
                     </Grid2>
                     <Grid2>
-                        <Link to="/about">
-                            <Typography>About</Typography>
-                        </Link>
-                    </Grid2>
-                    <Grid2>
                         <Link to="/contact">
                             <Typography>Contact</Typography>
                         </Link>

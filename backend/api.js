@@ -3,11 +3,12 @@ const path = require('path');
 const client = require('./database.js');
 const cors = require('cors'); 
 const app = express();
+const nodemailer = require('nodemailer');
+require('dotenv').config();
 
 app.use(cors());
 app.use(express.json());
 client.connect();
-app.use(express.json());
 
 app.get('/workoutprograms', (req, res) => {
     client.query('SELECT * FROM workout_programs', (err, result) => {
@@ -63,6 +64,39 @@ app.post('/createprogram', async (req,res)=> {
         console.error('Error inserting workout program:', err);
         res.status(500).json({ error: 'Failed to create workout program' });
       }
+})
+
+app.post('/sendEmail', (req,res)=> {
+    const {name, email, message} = req.body.data
+    console.log(name, email, message)
+    const transporter = nodemailer.createTransport({
+        service:'gmail',
+        auth: {
+            user: 'laivictor510@gmail.com',
+            pass: process.env.GMAILPASSWORD
+        },
+        tls: {
+            rejectUnauthorized: false
+        }
+    });
+
+    const mailOptions = {
+        from: 'laivictor510@gmail.com',
+        to: 'laivictor510@gmail.com',
+        subject: 'Message from FitHub',
+        text: "From: "+ name+ "\nEmail: " + email+ "\nMessage: " + message
+    };
+
+    transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json(err)
+        }
+        else {
+            console.log('Email sent' + info.response);
+            res.status(200).json('sent email')
+        }
+    })
 })
 
 

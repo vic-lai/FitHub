@@ -9,6 +9,7 @@ const CreateExercise = ({ week_num, day_num, index }) => {
             <Grid2 size={12}>
                 <TextField
                     {...register(`weeks.${week_num - 1}.days.${day_num - 1}.exercises.${index}.exercise`)} 
+                    required
                     label="Exercise"
                     variant="outlined"
                     fullWidth
@@ -16,6 +17,7 @@ const CreateExercise = ({ week_num, day_num, index }) => {
             </Grid2>
             <Grid2 size={6}>
                 <TextField
+                    required
                     {...register(`weeks.${week_num - 1}.days.${day_num - 1}.exercises.${index}.num_sets`)}
                     label="Sets"
                     type="number"
@@ -25,6 +27,7 @@ const CreateExercise = ({ week_num, day_num, index }) => {
             </Grid2>
             <Grid2 size={6}>
                 <TextField
+                    required
                     {...register(`weeks.${week_num - 1}.days.${day_num - 1}.exercises.${index}.reps`)}
                     label="Reps"
                     type="number"
