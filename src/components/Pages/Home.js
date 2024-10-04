@@ -24,11 +24,13 @@ const Home = () => {
       },[])
 
     return (
-        <Container sx={{ marginTop: "100px" }}>
+        <Container sx={{ marginTop: "100px", backgroundColor:"gray", padding:"50px", borderRadius:"20px" }}>
             {workoutPrograms.map(program => (
                 <Accordion key={program.p_id}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                        <Typography sx={{ fontWeight: "bold", fontSize: "25px" }} onClick={()=>handleClick(program)} variant="h1">{program.title}</Typography>
+                        <Typography sx={{ fontWeight: "bold", fontSize: "25px",'&:hover': {
+                            color:"#34abeb"
+                        }}} onClick={()=>handleClick(program)} variant="h1">{program.title}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         <Typography sx={{color:"black"}}>Type: {program.p_type} </Typography>

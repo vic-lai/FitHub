@@ -42,7 +42,7 @@ const Program = () => {
     
 
     return (
-        <Container sx={{ marginTop: "100px" }}>
+        <Container sx={{ marginTop: "100px"}}>
             {programData?.map((week)=> (
                 <Box sx={{borderStyle:"solid", padding:"20px", borderColor:"white", borderWidth:"2px"}}>
                     <Typography sx={{fontSize:"24px", fontWeight:"bold", mb:"20px", color:"white"}}>Week {week.week_number}</Typography>

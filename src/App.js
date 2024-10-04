@@ -7,6 +7,8 @@ import './App.css'
 import { useEffect, useState } from 'react';
 import CreateProgram from './components/Pages/CreateProgram';
 import Contact from './components/Pages/Contact';
+import Signup from './components/Pages/Signup';
+import Login from './components/Pages/Login';
 
 const theme = createTheme({
   typography: {
@@ -29,6 +31,8 @@ function App() {
             <Route path="/program/:title" element={<Program />} />
             <Route path="/create-program" element={<CreateProgram />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login/>} />
+            <Route path="/signup" element={<Signup />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

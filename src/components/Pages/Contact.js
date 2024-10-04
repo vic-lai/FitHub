@@ -1,4 +1,4 @@
-import { Button, Container, Grid2, TextField, Typography } from "@mui/material";
+import { Button, Container, Dialog, DialogTitle, Grid2, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -9,6 +9,7 @@ const Contact = () => {
         axios.post('http://localhost:3300/sendEmail', {data: data})
             .then(res => {
                 console.log("email sent");
+                setOpen(true)
             })
             .catch(err => {
                 console.log(err);
@@ -21,6 +22,11 @@ const Contact = () => {
             message:''
         }
     });
+
+    const [open, setOpen] = useState(false)
+    const handleClose = () => {
+        setOpen(false)
+    }
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <Container sx={{ marginTop: "150px", backgroundColor: "gray", borderRadius:'20px' }}>
@@ -45,6 +51,14 @@ const Contact = () => {
                     <Button type="submit" variant="contained" sx={{backgroundColor:"#34abeb"}}>Submit</Button>
                 </Grid2>
             </Container>
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>
+                    Message has been sent.
+                </DialogTitle>
+                <Grid2 container justifyContent="center" sx={{paddingBottom:"30px"}}>
+                    <Button onClick={handleClose} variant="contained"  sx={{backgroundColor:"#34abeb", width:'50%'}}>Okay</Button>
+                </Grid2>
+            </Dialog>
         </form>
     );
 }

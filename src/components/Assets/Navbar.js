@@ -1,4 +1,4 @@
-import { Box, Grid2, Typography } from "@mui/material";
+import { Box, Button, Grid2, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import './Navbar.css'
 
@@ -30,6 +30,18 @@ const Navbar = () => {
                         </Link>
                     </Grid2>
                 <Grid2>
+                    </Grid2>
+                </Grid2>
+                <Grid2 container size={2}>
+                    <Grid2 size={6}>
+                        <Link to="/login">
+                            <Typography sx={{width:"50%",backgroundColor:"#303638", color:"white", textAlign:"center", borderRadius:"20px", padding:"5px"}}>Log in</Typography>
+                        </Link>
+                    </Grid2>
+                    <Grid2 size={6} >
+                        <Link to="/signup">
+                            <Typography sx={{width:"50%",backgroundColor:"#303638", color:"white", textAlign:"center", borderRadius:"20px", padding:"5px"}}>Sign Up</Typography>
+                        </Link>
                     </Grid2>
                 </Grid2>
             </Grid2>
