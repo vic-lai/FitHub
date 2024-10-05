@@ -15,6 +15,7 @@ const Home = () => {
     const [workoutPrograms, setWorkoutPrograms] = useState([]);
 
     useEffect(()=> {
+        const token = localStorage.getItem('jwt')
         axios.get('http://localhost:3300/workoutprograms')
           .then((res) => {
             setWorkoutPrograms(res.data);

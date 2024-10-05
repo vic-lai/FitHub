@@ -31,11 +31,12 @@ module.exports.program_get = ('/workoutprograms/:p_id', (req, res) => {
 
 module.exports.create_program = ('/createprogram', async (req,res)=> {
     try {
+        const userId = req.user.id
         const { title, p_type, num_weeks, days, weeks, name} = req.body.data
         await client.query('BEGIN');
         const result = await client.query(
-          'INSERT INTO workout_programs (title, p_type, author, num_weeks, days_per_week) VALUES ($1, $2, $3, $4, $5) RETURNING p_id',
-          [title, p_type, name, num_weeks, days]
+          'INSERT INTO workout_programs (title, p_type, author, num_weeks, days_per_week, userId) VALUES ($1, $2, $3, $4, $5, $6) RETURNING p_id',
+          [title, p_type, name, num_weeks, days, userId]
         );
         const p_id = result.rows[0].p_id
         const query = `INSERT INTO program_details (p_id,week_number,day_number,exercise,num_sets,reps) VALUES ($1, $2, $3, $4, $5, $6)`

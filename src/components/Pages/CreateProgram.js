@@ -1,8 +1,10 @@
 import { Button, Container, Grid2, TextField, Box, Typography, Paper } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import CreateWeek from "../Assets/CreateWeek";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 const CreateProgram = () => {
     const { register, handleSubmit, control } = useForm({
@@ -17,6 +19,8 @@ const CreateProgram = () => {
 
     const [weeksComponents, setWeeksComponents] = useState([]);
     const [disabled, setDisabled] = useState(true);
+    const [loading, setLoading] = useState(true)
+    const navigate = useNavigate();
 
     const createLayout = data => {
         const newWeeksComponent = [];
@@ -30,12 +34,31 @@ const CreateProgram = () => {
     };
 
     const onSubmit = data => {
-        axios.post('http://localhost:3300/createprogram', {data: data})
+        const token = localStorage.getItem('jwt');
+
+        axios.post('http://localhost:3300/createprogram', {data: data}, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then(res => {
                 console.log(res)
             })
             .catch(err=> console.log(err));
     };
+
+    useEffect(()=> {
+        const token = localStorage.getItem('jwt')
+        if (!token) {
+            navigate('/login')
+        }
+        setLoading(false)
+
+    },[])
+
+    if (loading) {
+        return null;
+    }
 
     return (
         <Container sx={{ marginTop: "100px", backgroundColor: "gray", borderRadius:'20px' }}>

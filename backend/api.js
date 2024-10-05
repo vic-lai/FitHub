@@ -6,12 +6,16 @@ const app = express();
 const nodemailer = require('nodemailer');
 const authRoutes = require('./routes/authRoutes');
 const programRoutes = require('./routes/programRoutes')
+const cookieParser = require('cookie-parser')
 require('dotenv').config();
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000', 
+    credentials: true, 
+}));
 app.use(express.json());
+app.use(cookieParser());
 client.connect();
-
 
 app.use(programRoutes);
 

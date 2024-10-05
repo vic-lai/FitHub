@@ -1,8 +1,32 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/database'); 
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
-class User extends Model {}
+class User extends Model {
+  static async login(email, password) {
+    try {
+        const user = await this.findOne({ where: { email } });
+
+        if (!user) {
+            throw new Error('Invalid email');
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            throw new Error('Incorrect password');
+        }
+
+        const token = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN, {
+            expiresIn: '3d',
+        });
+
+        return { user, token }; 
+    } catch (err) {
+        throw err;
+    }
+}
+}
 
 User.init({
   email: {

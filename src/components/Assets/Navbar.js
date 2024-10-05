@@ -7,6 +7,14 @@ const Navbar = () => {
     const handleClick = () => {
         navigate("/")
     }
+    const token = localStorage.getItem('jwt')
+    const logout = () => {
+        console.log('logging out')
+        localStorage.removeItem('jwt')
+
+    }
+    
+
     return (
         <Box sx={{position:"absolute", top:0, left:0,width:"100%", backgroundColor:"#34abeb"}}>
             <Grid2 container size={12} sx={{ height:"80px", alignItems:"center"}}>
@@ -32,6 +40,7 @@ const Navbar = () => {
                 <Grid2>
                     </Grid2>
                 </Grid2>
+                {!token &&
                 <Grid2 container size={2}>
                     <Grid2 size={6}>
                         <Link to="/login">
@@ -44,6 +53,16 @@ const Navbar = () => {
                         </Link>
                     </Grid2>
                 </Grid2>
+                }
+                {token &&
+                <Grid2 container size={2}>
+                    <Grid2 size={6} onClick={logout}>
+                        <Link to="/">
+                            <Typography sx={{width:"50%",backgroundColor:"#303638", color:"white", textAlign:"center", borderRadius:"20px", padding:"5px"}}>Log out</Typography>
+                        </Link>
+                    </Grid2>
+                </Grid2>
+                }
             </Grid2>
         </Box>
     );
