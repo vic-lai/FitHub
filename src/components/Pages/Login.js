@@ -3,14 +3,14 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({onLoginSuccess}) => {
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const navigate = useNavigate()
     const onSubmit = async data => {
         const {email, password} = data
         try {
-            const res = await fetch('http://localhost:3300/login', {
+            const res = await fetch('/login', {
                 method: 'POST',
                 body: JSON.stringify({email, password}),
                 headers: { 'Content-Type': 'application/json '},
@@ -22,7 +22,7 @@ const Login = () => {
                 setPasswordError(data.errors.password)
             }
             if (data.user) {
-                localStorage.setItem('jwt', data.token)
+                onLoginSuccess();
                 navigate("/")
             }
         } catch (err) {
@@ -32,7 +32,7 @@ const Login = () => {
     const {register, handleSubmit} = useForm({});
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Container sx={{ marginTop: "150px", backgroundColor: "gray", borderRadius:'20px', width:"30%" }}>
+            <Container sx={{ marginTop: "150px", backgroundColor: "gray", borderRadius:'20px', width:"30%", minWidth:"400px" }}>
                 <Grid2 container sx={{marginLeft:"10%", marginRight:"10%"}}>
                     <Grid2 size={12} container justifyContent="center" sx={{marginTop:'20px'}}>
                         <Typography sx={{fontSize:"30px", color:"white"}}>Login</Typography>

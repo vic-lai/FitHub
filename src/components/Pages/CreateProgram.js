@@ -34,13 +34,8 @@ const CreateProgram = () => {
     };
 
     const onSubmit = data => {
-        const token = localStorage.getItem('jwt');
 
-        axios.post('http://localhost:3300/createprogram', {data: data}, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
+        axios.post('/createprogram', {data: data})
             .then(res => {
                 console.log(res)
             })
@@ -48,12 +43,14 @@ const CreateProgram = () => {
     };
 
     useEffect(()=> {
-        const token = localStorage.getItem('jwt')
-        if (!token) {
-            navigate('/login')
-        }
-        setLoading(false)
-
+        axios.get('/getUser')
+            .then(res => {
+                console.log(res)
+                setLoading(false);
+            })
+            .catch(err => {
+                navigate('/login')
+            })
     },[])
 
     if (loading) {

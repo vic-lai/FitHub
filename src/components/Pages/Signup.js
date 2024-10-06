@@ -3,27 +3,29 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-const Signup = () => {
+const Signup = ({onSignupSuccess}) => {
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
 
     const navigate = useNavigate()
     const onSubmit = async data => {
         const {email, password} = data
+        console.log('signing up')
         try {
-            const res = await fetch('http://localhost:3300/signup', {
+            const res = await fetch('/signup', {
                 method: 'POST',
                 body: JSON.stringify({email, password}),
                 headers: { 'Content-Type': 'application/json '},
                 credentials: 'include'
             });
             const data = await res.json();
+            console.log('data', data)
             if (data.errors) {
                 setEmailError(data.errors.email);
                 setPasswordError(data.errors.password)
             }
             if (data.user) {
-                localStorage.setItem('jwt', data.token)
+                onSignupSuccess()
                 navigate("/")
             }
         } catch (err) {
@@ -33,7 +35,7 @@ const Signup = () => {
     const {register, handleSubmit} = useForm({});
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Container sx={{ marginTop: "150px", backgroundColor: "gray", borderRadius:'20px', width:"30%" }}>
+            <Container sx={{ marginTop: "150px", backgroundColor: "gray", borderRadius:'20px', width:"30%", minWidth:"400px" }}>
                 <Grid2 container sx={{marginLeft:"10%", marginRight:"10%"}}>
                     <Grid2 size={12} container justifyContent="center" sx={{marginTop:'20px'}}>
                         <Typography sx={{fontSize:"30px", color:"white"}}>Sign up</Typography>

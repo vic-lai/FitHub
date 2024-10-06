@@ -7,15 +7,28 @@ const nodemailer = require('nodemailer');
 const authRoutes = require('./routes/authRoutes');
 const programRoutes = require('./routes/programRoutes')
 const cookieParser = require('cookie-parser')
+const { checkUser } = require('./middleware/authMiddleware')
 require('dotenv').config();
 
+const allowedOrigins = ['https://fithub.fithubprograms.xyz','http://localhost:3000'];
+
 app.use(cors({
-    origin: 'http://localhost:3000', 
-    credentials: true, 
+    origin: function(origin, callback) {
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, origin);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
 }));
+
+
+
 app.use(express.json());
 app.use(cookieParser());
 client.connect();
+app.use(express.static(path.join(__dirname, '../build')));
 
 app.use(programRoutes);
 
@@ -54,6 +67,9 @@ app.post('/sendEmail', (req,res)=> {
 
 app.use(authRoutes);
 
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build', 'index.html'));
+});
 
 app.listen(3300, () => {
     console.log("Server is now listening on port 3300");

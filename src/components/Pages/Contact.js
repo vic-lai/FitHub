@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 const Contact = () => {
     const onSubmit = data => {
         console.log(data)
-        axios.post('http://localhost:3300/sendEmail', {data: data})
+        axios.post('/sendEmail', {data: data})
             .then(res => {
                 console.log("email sent");
                 setOpen(true)

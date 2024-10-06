@@ -9,7 +9,7 @@ const Program = () => {
     const [programData, setProgramData] = useState([])
 
     useEffect(()=> {
-        axios.get(`http://localhost:3300/workoutprograms/${program.p_id}`)
+        axios.get(`/workoutprograms/${program.p_id}`)
           .then((res) => {
             const groupedData = Object.values(res.data.reduce((acc, detail) => {
                 const { week_number, day_number, exercise, num_sets, reps } = detail;
