@@ -10,7 +10,7 @@ const cookieParser = require('cookie-parser')
 const { checkUser } = require('./middleware/authMiddleware')
 require('dotenv').config();
 
-const allowedOrigins = ['https://fithub.fithubprograms.xyz','http://localhost:3000'];
+const allowedOrigins = ['https://fithubprograms.xyz','http://localhost:3000'];
 
 app.use(cors({
     origin: function(origin, callback) {

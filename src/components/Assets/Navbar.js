@@ -51,7 +51,7 @@ const Navbar = ({loggedIn, setLoggedIn}) => {
 
     useEffect(() => {
         checkLoginStatus();
-    }, [loggedIn]);
+    }, []);
 
     return (
         <Box sx={{position:"absolute", top:0, left:0,width:"100%", backgroundColor:"#34abeb",zIndex:2}}>
@@ -83,17 +83,17 @@ const Navbar = ({loggedIn, setLoggedIn}) => {
                                 <Link to="/contact">
                                     <MenuItem sx={{color:"black"}}>Contact</MenuItem>
                                 </Link>
-                                {!loggedIn && 
+                                {loggedIn && 
                                 <Link to="/">
                                     <MenuItem sx={{color:"black"}} onClick={logout}>Logout</MenuItem>
                                 </Link>
                                 }
-                                {loggedIn && 
+                                {!loggedIn && 
                                 <Link to="/login">
                                     <MenuItem sx={{color:"black"}}>Log In</MenuItem>
                                 </Link>
                                 }
-                                {loggedIn && 
+                                {!loggedIn && 
                                 <Link to="/signup">
                                     <MenuItem sx={{color:"black"}}>Sign Up</MenuItem>
                                 </Link>
@@ -122,29 +122,30 @@ const Navbar = ({loggedIn, setLoggedIn}) => {
                     </Grid2>
                 </Grid2>
                 )}
-                {loggedIn && !isMobile &&
-                <Grid2 container size={3}>
-                    <Grid2 size={6}>
-                        <Link to="/login">
-                            <Typography sx={{width:"50%",backgroundColor:"#303638", color:"white", textAlign:"center", borderRadius:"20px", padding:"5px", width:"80px",'&:hover': {color:'gray'},}}>Log in</Typography>
-                        </Link>
+                {!isMobile && (
+                    <Grid2 container size={3}>
+                        {loggedIn ? (
+                            <Grid2 size={12}>
+                                <Link to="/" onClick={logout}>
+                                    <Typography sx={{maxWidth:"100px", backgroundColor: "#303638", color: "white", textAlign: "center", borderRadius: "20px", padding: "5px", '&:hover': { color: 'gray' } }}>Log out</Typography>
+                                </Link>
+                            </Grid2>
+                        ) : (
+                            <>
+                                <Grid2 size={6}>
+                                    <Link to="/login">
+                                        <Typography sx={{ maxWidth:"100px", backgroundColor: "#303638", color: "white", textAlign: "center", borderRadius: "20px", padding: "5px", '&:hover': { color: 'gray' } }}>Log in</Typography>
+                                    </Link>
+                                </Grid2>
+                                <Grid2 size={6}>
+                                    <Link to="/signup">
+                                        <Typography sx={{ maxWidth:"100px", backgroundColor: "#303638", color: "white", textAlign: "center", borderRadius: "20px", padding: "5px", '&:hover': { color: 'gray' } }}>Sign Up</Typography>
+                                    </Link>
+                                </Grid2>
+                            </>
+                        )}
                     </Grid2>
-                    <Grid2 size={6} >
-                        <Link to="/signup">
-                            <Typography sx={{width:"50%",backgroundColor:"#303638", color:"white", textAlign:"center", borderRadius:"20px", padding:"5px", width:"80px",'&:hover': {color:'gray'},}}>Sign Up</Typography>
-                        </Link>
-                    </Grid2>
-                </Grid2>
-                }
-                {!loggedIn && !isMobile &&
-                <Grid2 container size={3}>
-                    <Grid2 size={6} onClick={logout}>
-                        <Link to="/">
-                            <Typography sx={{width:"50%",backgroundColor:"#303638", color:"white", textAlign:"center", borderRadius:"20px", padding:"5px",'&:hover': {color:'gray'},}}>Log out</Typography>
-                        </Link>
-                    </Grid2>
-                </Grid2>
-            }
+                )}
             </Grid2>
         </Box>
     );

@@ -28,15 +28,34 @@ const ProgramList = () => {
             {workoutPrograms.map(program => (
                 <Accordion key={program.p_id}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                        <Typography sx={{ fontWeight: "bold", fontSize: "25px",'&:hover': {
-                            color:"#34abeb"
-                        }}} onClick={()=>handleClick(program)} variant="h1">{program.title}</Typography>
+                        <Grid2 container size={12}>
+                            <Grid2 size={6} container justifyContent="flex-start" alignItems="center">
+                                <Typography sx={{ fontWeight: "bold", fontSize: "25px",'&:hover': {
+                                    color:"#34abeb"
+                                }}} onClick={()=>handleClick(program)} variant="h1">{program.title}</Typography>
+                            </Grid2>
+                            <Grid2 size={5} container justifyContent="flex-end">
+                            <Typography sx={{color:'black'}}>Likes: {program.likes}</Typography>
+                            </Grid2>
+                        </Grid2>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <Typography sx={{color:"black"}}>Type: {program.p_type} </Typography>
-                        <Typography sx={{color:"black"}}>Number of weeks: {program.num_weeks} </Typography>
-                        <Typography sx={{color:"black"}}>Days a week: {program.days_per_week}</Typography>
-                        <Typography sx={{color:"black"}}> Author: {program.author}</Typography>
+                        <Grid2 container size={12}>
+                            <Grid2 size={6} container>
+                                <Typography sx={{color:"black"}}>Type: {program.p_type} </Typography>
+                            </Grid2>
+                            <Grid2 size={6} container justifyContent="flex-start">
+                                <Typography sx={{color:"black"}}> Author: {program.author}</Typography>
+                            </Grid2>
+                        </Grid2>
+                        <Grid2 container size={12}>
+                        <Grid2 size={6} container>
+                                <Typography sx={{color:"black"}}>Number of weeks: {program.num_weeks} </Typography>
+                            </Grid2>
+                            <Grid2 size={6} container justifyContent="flex-start">
+                                <Typography sx={{color:"black"}}>Days a week: {program.days_per_week}</Typography>
+                            </Grid2>
+                        </Grid2>
                     </AccordionDetails>
                 </Accordion>
             ))}

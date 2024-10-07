@@ -34,10 +34,11 @@ const CreateProgram = () => {
     };
 
     const onSubmit = data => {
-
         axios.post('/createprogram', {data: data})
             .then(res => {
                 console.log(res)
+                const p_id=res.data.p_id
+                // have to navigate to the program after creating it
             })
             .catch(err=> console.log(err));
     };
@@ -62,7 +63,7 @@ const CreateProgram = () => {
             <FormProvider {...{ register, handleSubmit, control }}>
                 <form onSubmit={handleSubmit(createLayout)}>
                     <Grid2 container size={12}>
-                        <Grid2 size={11} sx={{marginLeft:"auto", marginRight:"auto", marginTop:"20px"}}>
+                        <Grid2 size={11.5} sx={{marginLeft:"auto", marginRight:"auto", marginTop:"20px"}}>
                             <label>
                                 Title <br />
                                 <TextField required disabled={!disabled} autoComplete="off" {...register("title")} sx={{'& .MuiOutlinedInput-notchedOutline': {borderRadius: '10px',}, borderRadius:"10px",width:"100%", minWidth: "160px", backgroundColor:!disabled?"darkgray":"white", mb:"20px"}}/>
@@ -71,25 +72,25 @@ const CreateProgram = () => {
                         <Grid2 size={{ xs: 12, sm: 6, md: 3 }} container justifyContent="center">
                             <label>
                                 Your Name<br />
-                                <TextField required disabled={!disabled} autoComplete="off" {...register("name")} sx={{'& .MuiOutlinedInput-notchedOutline': {borderRadius: '10px',}, borderRadius:"10px",backgroundColor: !disabled?"darkgray":"white"}} />
+                                <TextField required disabled={!disabled} autoComplete="off" {...register("name")} sx={{width:"200px",'& .MuiOutlinedInput-notchedOutline': {borderRadius: '10px'},borderRadius:"10px",backgroundColor: !disabled?"darkgray":"white"}} />
                             </label>
                         </Grid2>
                         <Grid2 size={{ xs: 12, sm: 6, md: 3 }} container justifyContent="center">
                             <label>
-                                What type of program is this?<br />
-                                <TextField required disabled={!disabled} autoComplete="off" {...register("p_type")} sx={{'& .MuiOutlinedInput-notchedOutline': {borderRadius: '10px',}, borderRadius:"10px",backgroundColor: !disabled?"darkgray":"white"}} />
+                                Type of program<br />
+                                <TextField required disabled={!disabled} autoComplete="off" {...register("p_type")} sx={{width:"200px",'& .MuiOutlinedInput-notchedOutline': {borderRadius: '10px',}, borderRadius:"10px",backgroundColor: !disabled?"darkgray":"white"}} />
                             </label>
                         </Grid2>
                         <Grid2 size={{ xs: 12, sm: 6, md: 3 }} container justifyContent="center">
                             <label>
                                 Number of weeks <br />
-                                <TextField required disabled={!disabled} autoComplete="off" type="number" {...register("num_weeks")} sx={{'& .MuiOutlinedInput-notchedOutline': {borderRadius: '10px',}, borderRadius:"10px",backgroundColor: !disabled?"darkgray":"white"}} />
+                                <TextField required disabled={!disabled} autoComplete="off" type="number" {...register("num_weeks")} sx={{width:"200px",'& .MuiOutlinedInput-notchedOutline': {borderRadius: '10px',}, borderRadius:"10px",backgroundColor: !disabled?"darkgray":"white" }} InputProps={{ inputProps: { min: 1, max: 20} }}/>
                             </label>
                         </Grid2>
                         <Grid2 size={{ xs: 12, sm: 6, md: 3 }} container justifyContent="center">
                             <label>
                                 Days a week <br />
-                                <TextField required disabled={!disabled} autoComplete="off" type="number" {...register("days")} sx={{'& .MuiOutlinedInput-notchedOutline': {borderRadius: '10px',}, borderRadius:"10px",backgroundColor: !disabled?"darkgray":"white"}} />
+                                <TextField required disabled={!disabled} autoComplete="off" type="number" {...register("days")} sx={{width:"200px",'& .MuiOutlinedInput-notchedOutline': {borderRadius: '10px',}, borderRadius:"10px",backgroundColor: !disabled?"darkgray":"white"}} InputProps={{ inputProps: { min: 1, max: 7} }}/>
                             </label>
                         </Grid2>
                     </Grid2>

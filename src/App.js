@@ -18,6 +18,15 @@ const theme = createTheme({
     h1: {
       color:"black"
     },
+  },
+  components: {
+    MuiTextField: {
+      styleOverRides: {
+        root: {
+          fontFamily:'Varela Round'
+        }
+      }
+    }
   }
 });
 
@@ -31,7 +40,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/programs" element={<ProgramList />} />
-            <Route path="/program/:title" element={<Program />} />
+            <Route path="/program/:title" element={<Program loggedIn={loggedIn} />} />
             <Route path="/create-program" element={<CreateProgram />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login onLoginSuccess={() => setLoggedIn(true) } />} />
