@@ -40,7 +40,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/programs" element={<ProgramList />} />
-            <Route path="/program/:title" element={<Program loggedIn={loggedIn} />} />
+            <Route path="/program/:p_id/:title" element={<Program loggedIn={loggedIn} />} />
             <Route path="/create-program" element={<CreateProgram />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login onLoginSuccess={() => setLoggedIn(true) } />} />

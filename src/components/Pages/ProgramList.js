@@ -9,7 +9,7 @@ const ProgramList = () => {
     
     const handleClick = (program) => {
         const formattedTitle = program.title.toLowerCase().replace(/\s+/g, '-');
-        navigate(`/program/${formattedTitle}`, {state: {program}})
+        navigate(`/program/${program.p_id}/${formattedTitle}`)
     }
 
     const [workoutPrograms, setWorkoutPrograms] = useState([]);

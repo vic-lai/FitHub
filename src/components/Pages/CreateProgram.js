@@ -38,7 +38,8 @@ const CreateProgram = () => {
             .then(res => {
                 console.log(res)
                 const p_id=res.data.p_id
-                // have to navigate to the program after creating it
+                const formattedTitle = data.title.toLowerCase().replace(/\s+/g, '-');
+                navigate(`/program/${p_id}/${formattedTitle}`)
             })
             .catch(err=> console.log(err));
     };

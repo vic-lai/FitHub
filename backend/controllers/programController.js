@@ -2,7 +2,7 @@ const client = require('../database.js');
 const jwt = require('jsonwebtoken')
 
 module.exports.workouts_get = (req,res) => {
-    client.query('SELECT * FROM workout_programs', (err, result) => {
+    client.query('SELECT * FROM workout_programs ORDER BY p_id ASC', (err, result) => {
         if (err) {
             console.error(err);
             return res.status(500).send('Internal Server Error');
@@ -23,8 +23,21 @@ module.exports.program_get = ('/workoutprograms/:p_id', (req, res) => {
             console.error(err);
             res.status(500).send('Internal Server Error');
         } else {
-            console.log(result.rows)
-            res.status(200).json(result.rows)
+            client.query(`SELECT author, likes, title, userid FROM workout_programs WHERE p_id=$1`, [p_id], (err, programdesc) => {
+                if (err) {
+                    console.error(err);
+                    res.status(500).send('Internal Server Error');
+                } else {
+                    const response = {
+                        programDetails: result.rows,
+                        author: programdesc.rows[0].author,
+                        likes: programdesc.rows[0].likes,
+                        titlename: programdesc.rows[0].title,
+                        userid: programdesc.rows[0].userid
+                    }
+                    res.status(200).json(response)
+                }
+            })
         }
     });
 })
@@ -132,7 +145,7 @@ module.exports.remove_like = ('/removelike', (req,res)=> {
             return res.status(401).json({message: 'not authenticated'});
         }
         const query = `DELETE FROM likes WHERE p_id=$1 AND user_id=$2`
-        client.query(query, [user.id, p_id], (err, result) => {
+        client.query(query, [p_id, user.id], (err, result) => {
             if (err) {
                 console.error(err);
                 res.status(500).send('Internal Server Error');
@@ -177,3 +190,69 @@ module.exports.get_likes = ('/numlikes', (req,res)=> {
     })
 })
 
+
+
+module.exports.is_creator = ('/isCreator', (req,res)=> {
+    const token = req.cookies.jwt;
+    const userid = Number(req.query.userid)
+
+    if (!token) {
+        console.log('no token')
+        return res.status(401).json({message: 'not authenticated'});
+    }
+    jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
+        if(err) {
+            console.log(err)
+            return res.status(401).json({message: 'not authenticated'});
+        }
+        console.log('checking if creator', userid, user.id)
+        if(userid === user.id) {
+            return res.status(200).json({ isCreator: true})
+        }
+        else {
+            return res.status(403).json({ isCreator: false})
+        }
+    })
+})
+
+module.exports.delete_program = ('/deleteProgram', (req, res) => {
+    const p_id = req.query.p_id;
+    client.query('BEGIN', (err) => {
+        if (err) {
+            return res.status(500).json('Error starting transaction');
+        }
+        const deleteDetailsQuery = `DELETE FROM program_details WHERE p_id=$1`;
+        client.query(deleteDetailsQuery, [p_id], (err, result) => {
+            if (err) {
+                client.query('ROLLBACK', () => {
+                    return res.status(500).json('Error deleting program details');
+                });
+            } else {
+                const deleteLikes = `DELETE FROM likes WHERE p_id=$1`
+                client.query(deleteLikes, [p_id], (err,result) => {
+                    if(err) {
+                        client.query('ROLLBACK', () => {
+                            return res.status(500).json('Error deleting likes')
+                        })
+                    } else {
+                        const deleteProgramQuery = `DELETE FROM workout_programs WHERE p_id=$1`;
+                        client.query(deleteProgramQuery, [p_id], (err, result) => {
+                            if (err) {
+                                client.query('ROLLBACK', () => {
+                                    return res.status(500).json('Error deleting workout program');
+                                });
+                            } else {
+                                client.query('COMMIT', (err) => {
+                                    if (err) {
+                                        return res.status(500).json('Error committing transaction');
+                                    }
+                                    return res.status(200).json('Program successfully deleted');
+                                });
+                            }
+                        });
+                    }
+                })
+            }
+        });
+    });
+});

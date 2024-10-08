@@ -57,7 +57,7 @@ const Navbar = ({loggedIn, setLoggedIn}) => {
         <Box sx={{position:"absolute", top:0, left:0,width:"100%", backgroundColor:"#34abeb",zIndex:2}}>
             <Grid2 container size={12} sx={{ height:"80px", alignItems:"center"}}>
                 <Grid2 size={isMobile?10:5} container justifyContent="center" alignItems="center">
-                    <img src="favicon.ico" style={{width:"90px", marginRight:"10px",cursor: "pointer"}} onClick={handleClick}></img>
+                    <img src={`${process.env.PUBLIC_URL}/favicon.ico`} style={{width:"90px", marginRight:"10px",cursor: "pointer"}} onClick={handleClick}></img>
                     <Typography sx={{fontSize:"40px", color:"white",cursor: "pointer", fontWeight:'bold'}} onClick={handleClick}>FitHub</Typography>
                 </Grid2>
                 {isMobile  ? (
