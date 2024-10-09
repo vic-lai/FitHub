@@ -1,4 +1,4 @@
-import { Button, Container, Grid2, TextField, Box, Typography, Paper } from "@mui/material";
+import { Button, Container, Grid2, TextField, Box, Typography, Paper, Select, MenuItem } from "@mui/material";
 import { useEffect, useState } from "react";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import CreateWeek from "../Assets/CreateWeek";
@@ -16,6 +16,8 @@ const CreateProgram = () => {
             weeks: []
         }
     });
+
+    const types = ['Strength', 'Bodybuilding', 'Powerlifting', 'Powerbuilding', 'Other']
 
     const [weeksComponents, setWeeksComponents] = useState([]);
     const [disabled, setDisabled] = useState(true);
@@ -79,7 +81,26 @@ const CreateProgram = () => {
                         <Grid2 size={{ xs: 12, sm: 6, md: 3 }} container justifyContent="center">
                             <label>
                                 Type of program<br />
-                                <TextField required disabled={!disabled} autoComplete="off" {...register("p_type")} sx={{width:"200px",'& .MuiOutlinedInput-notchedOutline': {borderRadius: '10px',}, borderRadius:"10px",backgroundColor: !disabled?"darkgray":"white"}} />
+                                <Select
+                                    required
+                                    disabled={!disabled}
+                                    labelId="p_type-label"
+                                    {...register("p_type")}
+                                    sx={{
+                                    backgroundColor:"white",
+                                    width:"200px",
+                                    '& .MuiOutlinedInput-notchedOutline': {
+                                        borderRadius: '10px',
+                                    },
+                                    borderRadius: "10px",
+                                    }}
+                                >
+                                    {types.map((type) => (
+                                    <MenuItem key={type} value={type}>
+                                        {type}
+                                    </MenuItem>
+                                    ))}
+                                </Select>
                             </label>
                         </Grid2>
                         <Grid2 size={{ xs: 12, sm: 6, md: 3 }} container justifyContent="center">

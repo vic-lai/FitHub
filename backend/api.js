@@ -9,7 +9,6 @@ const programRoutes = require('./routes/programRoutes')
 const cookieParser = require('cookie-parser')
 const { checkUser } = require('./middleware/authMiddleware')
 require('dotenv').config();
-
 const allowedOrigins = ['https://fithubprograms.xyz','http://localhost:3000'];
 
 app.use(cors({

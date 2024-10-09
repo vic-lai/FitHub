@@ -1,7 +1,7 @@
 import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, Grid2, Typography, useMediaQuery } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import likeImg from "../Assets/images/like.png"
 import likedImg from "../Assets/images/liked.png"
 import deleteImg from "../Assets/images/trash.png"
@@ -23,7 +23,6 @@ const Program = ({loggedIn}) => {
         setOpen(!open)
     }
     
-
     const handleChange = async () => {
         if(loggedIn) {
             try {
@@ -125,14 +124,22 @@ const Program = ({loggedIn}) => {
                 <Box sx={{borderStyle:"solid", padding:"20px", borderColor:"white", borderWidth:"2px"}}>
                     <Typography sx={{fontSize:"24px", fontWeight:"bold", mb:"20px", color:"white"}}>Week {week.week_number}</Typography>
                     <Grid2 container>
-                        {week.days?.map((day)=> (
-                            <Grid2 size={isMobile?3.4:1.7} container sx={{flexDirection:'column', mb:"40px"}}>
-                                <Typography sx={{fontSize:"20px", color:"white"}}>Day {day.day_number}</Typography>
-                                <Grid2 container sx={{flexDirection:"column"}}>
-                                    {day.exercises?.map((exercise)=> (
-                                        <Typography sx={{color:"white"}}>{exercise.exercise}: {exercise.num_sets}x{exercise.reps}</Typography>
-                                    ))}
+                        {week.days.map((day) => (
+                        <Grid2 key={day.day_number} size={isMobile ? 3.4 : 1.7} container sx={{ flexDirection: "column", mb: "40px" }}>
+                            <Typography sx={{ fontSize: "25px", color: "white" }}>Day {day.day_number}</Typography>
+                            <Grid2 container sx={{ flexDirection: "column"}}>
+                            {day.exercises.map((exercise) => (
+                                <Grid2>
+                                    <hr style={{width:"90%", textAlign:'left', margin:0}} />
+                                    <Typography sx={{ color: "white" }}>
+                                        {exercise.exercise}
+                                    </Typography>
+                                    <Typography sx={{ color: "white" }}>
+                                        {exercise.num_sets} x {exercise.reps}
+                                    </Typography>
                                 </Grid2>
+                            ))}
+                            </Grid2>
                             </Grid2>
                         ))}
                     </Grid2>
